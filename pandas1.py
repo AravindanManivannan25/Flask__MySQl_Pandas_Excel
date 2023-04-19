@@ -15,7 +15,7 @@ def my_functions():
         query = 'select * from students'
         my_data=pd.read_sql(query , conn)
 
-        print(f"My Data : {my_data}")
+        print(f"My Data : {my_data}") 
         return f"File downloaded {my_data.to_excel('my_filepanda21.xlsx')}"
     except Exception as e:
         return f"There is an Error {e}"
