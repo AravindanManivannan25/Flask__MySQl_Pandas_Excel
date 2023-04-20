@@ -3,6 +3,7 @@ import pymysql
 from config import  mysql
 from flask import flash, request ,Response ,render_template , url_for , send_file
 import pandas as pd
+import os
 #import xlswritter
 
    
@@ -26,17 +27,12 @@ def my_functions():
         #my_data2=pd.read_sql(query2 , conn)
         print(f"my_data : {my_data}")
 
-        #output ='C:\\Users\\DELL\\Projects\\my_filepandas35.xlsx'
-
-        with pd.ExcelWriter('C:\\Users\\DELL\\Projects\\Excel\\my_filepandas345.xlsx') as output:
+        #output ='C:\\Users\\DELL\\Projects\\Flask_MySql_Excel\\Excel\\my_filepandas346.xlsx'
+        file_path = os.path.join(os.path.dirname(__file__) , 'Excel', 'my_filepandas346.xlsx')
+        with pd.ExcelWriter(file_path) as output:
             my_data.to_excel(output,sheet_name = 'Full_Details' , index = False)
             my_data1.to_excel(output,sheet_name = 'Age_Above_30', index = False) 
             my_data2.to_excel(output, sheet_name='Age_below_30', index = False)
-        
-
-        #my_data.to_excel(output,sheet_name = 'Full_Details' , index = False)
-        #my_data1.to_excel(output,sheet_name = 'Age_Above_30' , index = False)
-        #my_data2.to_excel(output,sheet_name = 'Age_Below_30' ,index = False)
         
         print(f"path : {__file__}")
         return  send_file (output, as_attachment=True, mimetype='application/vnd.ms-excel')
@@ -47,7 +43,5 @@ def my_functions():
     except Exception as e:
         return f"There is an Error {e}"
     
-
- 
 if __name__ == "__main__":
     app.run(host ="localhost", port = int("5000"))
